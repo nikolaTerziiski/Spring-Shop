@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons::head"></head>
+
+<header th:replace="fragments/commons::header">
+</header>
+<body>
+<form th:action="@{/users/login}"
+      th:method="POST">
+    <div class="form-group">
+        <label for="username">Enter Username</label>
+        <input
+               type="text" class="form-control"
+               required minlength="3" maxlength="40"
+               id="username"
+               name="username"
+               aria-describedby="emailHelp"
+               placeholder="Enter email">
+        <small id="usernameError"
+               class="invalid-feedback bg-danger rounded">Username length must be between 3 and 40 characters</small>
+        <label for="password">Enter password </label>
+        <input
+               required minlength="3" maxlength="40"
+               class="form-control"
+               id="password"
+               type="password"
+               name="password"
+               aria-describedby="emailHelp"
+               placeholder="Enter email">
+        <small id="passwordError"
+               class="invalid-feedback bg-danger rounded">Password length must be between 3 and 40 characters</small>
+    </div>
+    <button id="submitButton" type="submit" class="btn btn-primary">Log in</button> or
+    <a href="/users/register">Register</a>
+</form>
+</body>
+<footer th:replace="fragments/commons::footer"></footer>
+</html>
+
+<style>
+    form {
+        padding-top: 100px;
+        margin-left: 600px;
+        margin-right: 600px;
+    }
+    input {
+        margin-bottom: 25px;
+    }
+</style>

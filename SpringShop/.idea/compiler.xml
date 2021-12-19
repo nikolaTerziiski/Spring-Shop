@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="springshop" target="11" />
+      <module name="SpringShop.SpringShop" target="11" />
+      <module name="SpringShop.SpringShop.main" target="11" />
+      <module name="SpringShop.SpringShop.main~1" target="11" />
+      <module name="SpringShop.SpringShop.test" target="11" />
+      <module name="SpringShop.SpringShop.test~1" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
