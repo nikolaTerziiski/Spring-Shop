@@ -89,7 +89,6 @@ public class ProductController {
     public String all() {
 
 
-
         return "products-all";
     }
 
