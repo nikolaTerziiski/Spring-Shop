@@ -8,6 +8,7 @@ import bg.springshop.springshop.repository.UserRepository;
 import bg.springshop.springshop.service.RoleService;
 import bg.springshop.springshop.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -54,5 +55,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean userExistsByEmail(String email) {
         return this.userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public User getCurrentLoggedInUser() {
+
+        return this.userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName())
+            .orElse(null);
     }
 }

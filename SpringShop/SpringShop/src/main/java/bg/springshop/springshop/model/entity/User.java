@@ -51,7 +51,7 @@ public class User extends BaseEntity {
         this.roles = roles;
     }
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     public List<Product> getProducts() {
         return products;
     }

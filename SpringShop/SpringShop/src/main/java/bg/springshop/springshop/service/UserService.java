@@ -2,7 +2,6 @@ package bg.springshop.springshop.service;
 
 import bg.springshop.springshop.model.binding.UserRegistrationBindingModel;
 import bg.springshop.springshop.model.entity.User;
-import org.springframework.stereotype.Service;
 
 
 public interface UserService {
@@ -11,4 +10,6 @@ public interface UserService {
     boolean userExistsByUsername(String username);
 
     boolean userExistsByEmail(String email);
+
+    User getCurrentLoggedInUser();
 }

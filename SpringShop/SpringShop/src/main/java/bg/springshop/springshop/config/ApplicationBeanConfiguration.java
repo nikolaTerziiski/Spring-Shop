@@ -18,4 +18,5 @@ public class ApplicationBeanConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new Pbkdf2PasswordEncoder();
     }
+
 }

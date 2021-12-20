@@ -2,6 +2,7 @@ package bg.springshop.springshop.model.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -14,8 +15,9 @@ public class Product extends BaseEntity{
     private Integer viewCount;
     private List<Review> reviews;
     private Category category;
-    private List<Image> images;
+    private String image;
     private User creator;
+    private LocalDateTime addedOn;
 
 
     @Column(nullable = false)
@@ -27,7 +29,7 @@ public class Product extends BaseEntity{
         this.name = name;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     public String getDescription() {
         return description;
     }
@@ -72,15 +74,6 @@ public class Product extends BaseEntity{
         this.category = category;
     }
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    public List<Image> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Image> images) {
-        this.images = images;
-    }
-
     @ManyToOne
     public User getCreator() {
         return creator;
@@ -88,5 +81,23 @@ public class Product extends BaseEntity{
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    @Column
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    @Column
+    public LocalDateTime getAddedOn() {
+        return addedOn;
+    }
+
+    public void setAddedOn(LocalDateTime addedOn) {
+        this.addedOn = addedOn;
     }
 }

@@ -29,7 +29,7 @@ spring:
         format_sql: true
     defer-datasource-initialization: true
   #Cloudinary Properties
-  #cloudinary:
-  #api-key: 
-  #api-secret: 
-  #cloud-name: 
+  cloudinary:
+  api-key: 966255371123611
+  api-secret: ${CLOUDINARY_API_SECRET}
+  cloud-name: dajzbpdip
