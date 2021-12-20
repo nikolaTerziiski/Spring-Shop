@@ -1,6 +1,7 @@
 package bg.springshop.springshop.web;
 
 import bg.springshop.springshop.model.binding.ProductBindingModel;
+import bg.springshop.springshop.model.view.ProductAllViewModel;
 import bg.springshop.springshop.model.view.ProductDetailsViewModel;
 import bg.springshop.springshop.service.ProductService;
 import bg.springshop.springshop.service.UserService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/products")
@@ -86,8 +88,11 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public String all() {
+    public String all(Model model) {
 
+        List<ProductAllViewModel>  products = this.productService.takeAll();
+
+        model.addAttribute("products", products);
 
         return "products-all";
     }

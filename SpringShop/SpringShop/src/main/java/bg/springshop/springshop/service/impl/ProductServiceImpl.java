@@ -2,6 +2,7 @@ package bg.springshop.springshop.service.impl;
 
 import bg.springshop.springshop.model.binding.ProductBindingModel;
 import bg.springshop.springshop.model.entity.Product;
+import bg.springshop.springshop.model.view.ProductAllViewModel;
 import bg.springshop.springshop.model.view.ProductDetailsViewModel;
 import bg.springshop.springshop.repository.ProductRepository;
 import bg.springshop.springshop.service.CategoryService;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -61,5 +64,19 @@ public class ProductServiceImpl implements ProductService {
         product.setViewCount(product.getViewCount() + 1);
 
         this.productRepository.save(product);
+    }
+
+    @Override
+    public List<ProductAllViewModel> takeAll() {
+
+        List<Product> products = this.productRepository.findAll();
+
+        List<ProductAllViewModel> products2 = products
+            .stream().map(e -> {
+                ProductAllViewModel productAllViewModel = modelMapper.map(e, ProductAllViewModel.class);
+                return productAllViewModel;
+            }).collect(Collectors.toList());
+
+        return products2;
     }
 }

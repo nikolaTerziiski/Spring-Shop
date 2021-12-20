@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/commons::head"></head>
 
 <body>
@@ -7,102 +8,25 @@
 
 <div class="container" style="margin-top: 50px">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3" th:each="r : ${products}" th:object="${r}">
             <div class="ibox">
                 <div class="ibox-content product-box">
                     <div class="product-imitation">
-                        [ INFO ]
+                        <img th:src="*{image}">
                     </div>
                     <div class="product-desc">
                     <span class="product-price">
-                        $10
+                        <span th:text="*{price}"></span>
+                        lv.
                     </span>
-                        <small class="text-muted">Category</small>
-                        <a href="#" class="product-name"> Product</a>
+                         <span class="text-muted">Category: <p th:text="*{category.getName()}"></p></span>
 
-                        <div class="small m-t-xs">
-                            Many desktop publishing packages and web page editors now.
-                        </div>
+                        <span th:text="*{name}" class="product-name"> Product</span>
+
+                        <span style="color: lightgray">Added on <span th:text="*{#temporals.format(addedOn,'yyyy-MM-dd HH:mm')}" style="color: lightgray"></span></span>
                         <div class="m-t text-righ">
 
-                            <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="ibox">
-                <div class="ibox-content product-box">
-
-                    <div class="product-imitation">
-                        [ INFO ]
-                    </div>
-                    <div class="product-desc">
-                    <span class="product-price">
-                        $10
-                    </span>
-                        <small class="text-muted">Category</small>
-                        <a href="#" class="product-name"> Product</a>
-
-
-
-                        <div class="small m-t-xs">
-                            Many desktop publishing packages and web page editors now.
-                        </div>
-                        <div class="m-t text-righ">
-
-                            <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="ibox">
-                <div class="ibox-content product-box active">
-
-                    <div class="product-imitation">
-                        [ INFO ]
-                    </div>
-                    <div class="product-desc">
-                    <span class="product-price">
-                        $10
-                    </span>
-                        <small class="text-muted">Category</small>
-                        <a href="#" class="product-name"> Product</a>
-
-
-
-                        <div class="small m-t-xs">
-                            Many desktop publishing packages and web page editors now.
-                        </div>
-                        <div class="m-t text-righ">
-
-                            <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="ibox">
-                <div class="ibox-content product-box">
-
-                    <div class="product-imitation">
-                        [ INFO ]
-                    </div>
-                    <div class="product-desc">
-                    <span class="product-price">
-                        $10
-                    </span>
-                        <small class="text-muted">Category</small>
-                        <a href="#" class="product-name"> Product</a>
-                        <div class="small m-t-xs">
-                            Many desktop publishing packages and web page editors now.
-                        </div>
-                        <div class="m-t text-righ">
-                            <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
+                            <a th:href="@{/products/details/{id}(id = *{id})}" class="btn btn-xs btn-outline btn-primary">Details <i class="fa fa-long-arrow-right"></i> </a>
                         </div>
                     </div>
                 </div>
