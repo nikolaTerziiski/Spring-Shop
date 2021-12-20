@@ -5,4 +5,6 @@ import bg.springshop.springshop.model.entity.enums.CategoryEnum;
 
 public interface CategoryService {
     Category findCategory(CategoryEnum categoryEnum);
+
+    Category containsCategory(String name);
 }

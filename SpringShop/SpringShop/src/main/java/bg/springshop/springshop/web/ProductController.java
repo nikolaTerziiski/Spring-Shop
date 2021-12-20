@@ -1,6 +1,7 @@
 package bg.springshop.springshop.web;
 
-import bg.springshop.springshop.model.binding.ProductBindingModel;
+import bg.springshop.springshop.model.binding.ProductCreateBindingModel;
+import bg.springshop.springshop.model.binding.ProductEditBindingModel;
 import bg.springshop.springshop.model.view.ProductAllViewModel;
 import bg.springshop.springshop.model.view.ProductDetailsViewModel;
 import bg.springshop.springshop.service.ProductService;
@@ -31,8 +32,13 @@ public class ProductController {
     }
 
     @ModelAttribute
-    public ProductBindingModel productBindingModel() {
-        return new ProductBindingModel();
+    public ProductCreateBindingModel productCreateBindingModel() {
+        return new ProductCreateBindingModel();
+    }
+
+    @ModelAttribute
+    public ProductEditBindingModel productEditBindingModel() {
+        return new ProductEditBindingModel();
     }
 
     @GetMapping("/add")
@@ -41,18 +47,18 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid ProductBindingModel productBindingModel,
+    public String add(@Valid ProductCreateBindingModel productCreateBindingModel,
                       BindingResult bindingResult,
                       RedirectAttributes redirectAttributes){
 
         if(bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("routeAddBindingModel", productBindingModel);
+            redirectAttributes.addFlashAttribute("productCreateBindingModel", productCreateBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.productBindingModel", bindingResult);
 
             return "redirect:add";
         }
 
-        this.productService.addProduct(productBindingModel);
+        this.productService.addProduct(productCreateBindingModel);
         return "redirect:all";
     }
 
@@ -68,7 +74,6 @@ public class ProductController {
 
         //Increment product view
         this.productService.incrementProductView(id);
-
 
         model.addAttribute("productToShow", productDetailsViewModel);
         model.addAttribute("isCreator", false);
@@ -97,4 +102,58 @@ public class ProductController {
         return "products-all";
     }
 
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Long id, Model model){
+        ProductEditBindingModel productEditBindingModel = this.productService.createProductForEdit(id);
+        if(productEditBindingModel == null){
+            return "redirect:error";
+        }
+
+        if(this.productService.doesUserCreateProduct(id)
+            || this.userService.getCurrentLoggedInUser().getRoles().contains("ROLE_ADMIN")
+            || this.userService.getCurrentLoggedInUser().getRoles().contains("ROLE_MASTER")){
+
+            model.addAttribute("canChange", false);
+            model.addAttribute("productEditBindingModel", productEditBindingModel);
+            return "products-edit";
+        }
+
+        model.addAttribute("canChange", true);
+        return "products-edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String edit(@Valid ProductEditBindingModel productEditBindingModel,
+                       BindingResult bindingResult,
+                       RedirectAttributes redirectAttributes,
+                       @PathVariable Long id){
+
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("productEditBindingModel", productEditBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.productEditBindingModel", bindingResult);
+
+            return "redirect:/products/edit/{id}";
+        }
+
+        this.productService.editProduct(productEditBindingModel, id);
+        return "redirect:/products/details/{id}";
+    }
+
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        if(!this.productService.doesProductExist(id)){
+            return "redirect:/error";
+        }
+
+        if(this.productService.doesUserCreateProduct(id)
+            || this.userService.getCurrentLoggedInUser().getRoles().contains("ROLE_ADMIN")
+            || this.userService.getCurrentLoggedInUser().getRoles().contains("ROLE_MASTER")){
+
+            this.productService.deleteProduct(id);
+            return "redirect:/";
+        }
+
+        return "redirect:/error";
+    }
 }

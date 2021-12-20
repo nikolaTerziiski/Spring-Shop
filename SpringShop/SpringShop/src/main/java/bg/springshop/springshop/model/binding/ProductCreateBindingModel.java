@@ -9,7 +9,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
-public class ProductBindingModel {
+public class ProductCreateBindingModel {
     private String name;
     private String description;
     private BigDecimal price;

@@ -5,7 +5,7 @@
 </head>
 <body>
 <header th:replace="fragments/commons::header"></header>
-<form th:object="${productBindingModel}"
+<form th:object="${productCreateBindingModel}"
       th:method="POST"
       th:action="@{/products/add}">
     <div class="container">
@@ -16,7 +16,7 @@
                    required minlength="3" maxlength="40"
                    th:errorclass="'is-invalid bg-danger'"
                    type="text" class="form-control" id="inputEmail4" placeholder="Product name..">
-            <small th:if="${#fields.hasErrors('description')}" id="errorName" class="bg-danger text-light rounded">
+            <small th:if="${#fields.hasErrors('name')}" id="errorName" class="bg-danger text-light rounded">
                 Invalid name, must be between 3 and 30 characters long
             </small>
         </div>
@@ -31,7 +31,7 @@
         <div class="form-group">
             <label for="inputPrice">Price</label>
             <input th:field="*{price}" class="form-control" id="inputPrice" placeholder="Desc..."></input>
-            <small th:if="${#fields.hasErrors('description')}" id="errorPrice" class="bg-danger text-light rounded">
+            <small th:if="${#fields.hasErrors('price')}" id="errorPrice" class="bg-danger text-light rounded">
                 Invalid Price, must be positive
             </small>
         </div>

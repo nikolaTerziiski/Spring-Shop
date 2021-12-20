@@ -1,7 +1,11 @@
 package bg.springshop.springshop.service.impl;
 
-import bg.springshop.springshop.model.binding.ProductBindingModel;
+import bg.springshop.springshop.model.binding.ProductCreateBindingModel;
+import bg.springshop.springshop.model.binding.ProductEditBindingModel;
+import bg.springshop.springshop.model.entity.Category;
 import bg.springshop.springshop.model.entity.Product;
+import bg.springshop.springshop.model.entity.User;
+import bg.springshop.springshop.model.entity.enums.CategoryEnum;
 import bg.springshop.springshop.model.view.ProductAllViewModel;
 import bg.springshop.springshop.model.view.ProductDetailsViewModel;
 import bg.springshop.springshop.repository.ProductRepository;
@@ -11,7 +15,6 @@ import bg.springshop.springshop.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addProduct(ProductBindingModel productBindingModel) {
+    public void addProduct(ProductCreateBindingModel productBindingModel) {
 
         Product product = modelMapper.map(productBindingModel, Product.class);
 
@@ -78,5 +81,54 @@ public class ProductServiceImpl implements ProductService {
             }).collect(Collectors.toList());
 
         return products2;
+    }
+
+    @Override
+    public boolean doesUserCreateProduct(Long id) {
+         User user = this.userService.getCurrentLoggedInUser();
+         Product product = this.productRepository.findById(id).orElse(null);
+
+         if(user.id == product.getCreator().id){
+             return true;
+         }
+         return false;
+    }
+
+    @Override
+    public ProductEditBindingModel createProductForEdit(Long id) {
+        Product product =  this.productRepository.findById(id).orElse(null);
+        if(product == null){
+            return null;
+        }
+        return this.modelMapper.map(product, ProductEditBindingModel.class);
+    }
+
+    @Override
+    public void editProduct(ProductEditBindingModel productEditBindingModel, Long id) {
+        Product oldProduct = this.productRepository.findById(id).orElse(null);
+
+        oldProduct.setImage(productEditBindingModel.getImage());
+        oldProduct.setName(productEditBindingModel.getName());
+        oldProduct.setDescription(productEditBindingModel.getDescription());
+        oldProduct.setPrice(productEditBindingModel.getPrice());
+        oldProduct.setCategory(this.categoryService.findCategory(productEditBindingModel.getCategory()));
+
+        this.productRepository.save(oldProduct);
+     }
+
+    @Override
+    public boolean doesProductExist(Long id) {
+        return this.productRepository.existsById(id);
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        this.productRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ProductAllViewModel> getProductsByCategory(Category category) {
+        return this.takeAll().stream().filter(e -> e.getCategory().id == category.id).collect(
+            Collectors.toList());
     }
 }

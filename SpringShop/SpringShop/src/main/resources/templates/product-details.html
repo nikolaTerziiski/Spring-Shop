@@ -23,13 +23,13 @@
                         <button th:action="@{/cart/add/{id}(id = *{id})}" class="btn btn-primary btn-rounded">Add to Cart</button>
                         <div th:if="${isCreator}" style="margin-top: 30px">
                             <p>Owner actions: </p>
-                            <button class="btn btn-warning" th:action="@{/products/edit/{id}(id = *{id})}">Edit</button>
-                            <button class="btn btn-danger" th:action="@{/products/delete/{id}(id = *{id})}">Delete</button>
+                            <a class="btn btn-warning" th:href="@{/products/edit/{id}(id = *{id})}">Edit</a>
+                            <a class="btn btn-danger" th:href="@{/products/delete/{id}(id = *{id})}">Delete</a>
                         </div>
                         <div th:if="${isAdmin}" style="margin-top: 30px">
                             <p>Admin actions: </p>
-                            <button class="btn btn-warning" th:action="@{/products/edit/{id}(id = *{id})}">Edit</button>
-                            <button class="btn btn-danger" th:action="@{/products/delete/{id}(id = *{id})}">Delete</button>
+                            <a class="btn btn-warning" th:href="@{/products/edit/{id}(id = *{id})}">Edit</a>
+                            <a class="btn btn-danger" th:href="@{/products/delete/{id}(id = *{id})}">Delete</a>
                         </div>
                     </th:block>
                 </div>
