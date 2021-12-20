@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+</head>
+<body>
+<header th:replace="fragments/commons::header"></header>
+<form th:object="${productBindingModel}"
+      th:method="POST"
+      th:action="@{/products/add}">
+    <div class="container">
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="inputEmail4">Product name</label>
+                <input name="name" th:field="*{name}"
+                       required minlength="3" maxlength="40"
+                       th:errorclass="'is-invalid bg-danger'"
+                       type="text" class="form-control" id="inputEmail4" placeholder="Product name..">
+                <small th:if="${#fields.hasErrors('description')}" id="errorName" class="bg-danger text-light rounded">
+                    Invalid name, must be between 3 and 30 characters long
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputDescription">Description</label>
+            <textarea th:field="*{description}" rows="5" class="form-control" id="inputDescription" placeholder="Desc..."></textarea>
+            <small th:if="${#fields.hasErrors('description')}" id="errorDescription" class="bg-danger text-light rounded">
+                Invalid Description, must be between 3 and 30 characters long
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="inputPrice">Price</label>
+            <input th:field="*{price}" class="form-control" id="inputPrice" placeholder="Desc..."></input>
+            <small th:if="${#fields.hasErrors('description')}" id="errorPrice" class="bg-danger text-light rounded">
+                Invalid Price, must be positive
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="category">Please select the category of your product</label>
+            <select th:field="*{category}" th:errorclass="bg-danger" id="category" name="category" class="custom-select"
+                    aria-describedby="categoryHelpInline">
+                <option value="" selected>Category</option>
+                <option th:each="c : ${T(bg.springshop.springshop.model.entity.enums.CategoryEnum).values()}" th:value="${c}" th:text="${c}">Category</option>
+            </select>
+            <small th:if="${#fields.hasErrors('category')}" id="categoryHelpInline" class="bg-danger text-light rounded">
+                You must select the category.
+            </small>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="image">Image URL</label>
+                <input name="image" th:field="*{image}"
+                       required minlength="3" maxlength="40"
+                       th:errorclass="'is-invalid bg-danger'"
+                       type="text" class="form-control" id="image" placeholder="Paste image url..">
+                <small th:if="${#fields.hasErrors('image')}" id="imageError" class="bg-danger text-light rounded">
+                    Invalid name, must be between 3 and 30 characters long
+                </small>
+            </div>
+        </div>
+        <div class="offset-5">
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </div>
+    </div>
+</form>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+
+</html>
+
+<style>
+    body {
+        background-color: aliceblue;
+        margin-bottom:50px;
+        overflow:auto;
+        height: 100%;
+    }
+    div.container {
+        margin-top: 75px;
+        width:800px;
+    }
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+</style>

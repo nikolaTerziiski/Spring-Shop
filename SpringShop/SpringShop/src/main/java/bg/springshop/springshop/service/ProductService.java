@@ -7,4 +7,6 @@ public interface ProductService {
     void addProduct(ProductBindingModel productBindingModel);
 
     ProductDetailsViewModel createProductForDetails(Long id);
+
+    void incrementProductView(Long id);
 }

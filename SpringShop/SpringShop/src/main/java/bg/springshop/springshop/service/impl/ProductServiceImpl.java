@@ -48,6 +48,18 @@ public class ProductServiceImpl implements ProductService {
     public ProductDetailsViewModel createProductForDetails(Long id) {
         Product product =  this.productRepository.findById(id).orElse(null);
 
+        if(product == null){
+            return null;
+        }
         return this.modelMapper.map(product, ProductDetailsViewModel.class);
+    }
+
+    @Override
+    public void incrementProductView(Long id) {
+        Product product = this.productRepository.findById(id).orElse(null);
+
+        product.setViewCount(product.getViewCount() + 1);
+
+        this.productRepository.save(product);
     }
 }

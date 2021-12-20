@@ -16,6 +16,15 @@ public class ProductDetailsViewModel {
     private String image;
     private Integer viewCount;
     private LocalDateTime addedOn;
+    private Long creatorId;
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
 
     public Long getId() {
         return id;

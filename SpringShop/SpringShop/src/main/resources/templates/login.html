@@ -4,9 +4,8 @@
 
 <head th:replace="fragments/commons::head"></head>
 
-<header th:replace="fragments/commons::header">
-</header>
 <body>
+<header th:replace="fragments/commons::header"></header>
 <form th:action="@{/users/login}"
       th:method="POST">
     <div class="form-group">
@@ -35,8 +34,9 @@
     <button id="submitButton" type="submit" class="btn btn-primary">Log in</button> or
     <a href="/users/register">Register</a>
 </form>
+    <footer th:replace="fragments/commons::footer"></footer>
 </body>
-<footer th:replace="fragments/commons::footer"></footer>
+
 </html>
 
 <style>

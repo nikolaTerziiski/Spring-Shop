@@ -2,14 +2,10 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <!--<head th:replace="fragments/commons::head"></head>-->
-<head th:fragment="head">
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Spring Shop</title>
-</head>
+<head th:fragment="head"></head>
+<body>
 <header th:replace="fragments/commons::header">
 </header>
-<body>
 <form th:object="${userRegistrationBindingModel}"
         th:action="@{/users/register}"
         th:method="POST">
@@ -51,8 +47,8 @@
     </div>
     <button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
 </form>
-</body>
 <footer th:replace="fragments/commons::footer"></footer>
+</body>
 </html>
 
 <style>

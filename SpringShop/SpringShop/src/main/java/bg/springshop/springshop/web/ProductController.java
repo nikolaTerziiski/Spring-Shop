@@ -1,7 +1,11 @@
 package bg.springshop.springshop.web;
 
 import bg.springshop.springshop.model.binding.ProductBindingModel;
+import bg.springshop.springshop.model.view.ProductDetailsViewModel;
 import bg.springshop.springshop.service.ProductService;
+import bg.springshop.springshop.service.UserService;
+import bg.springshop.springshop.service.impl.SpringShopUserDetailsService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,9 +19,13 @@ import javax.validation.Valid;
 public class ProductController {
 
     private final ProductService productService;
+    private final UserService userService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService,
+                             SpringShopUserDetailsService springShopUserDetailsService,
+                             UserService userService) {
         this.productService = productService;
+        this.userService = userService;
     }
 
     @ModelAttribute
@@ -27,7 +35,7 @@ public class ProductController {
 
     @GetMapping("/add")
     public String add(){
-        return "addProduct";
+        return "products-add";
     }
 
     @PostMapping("/add")
@@ -48,14 +56,41 @@ public class ProductController {
 
     @GetMapping("/details/{id}")
     public String details(@PathVariable Long id, Model model){
-        model.addAttribute("routeToExplore", this.productService.createProductForDetails(id));
 
+        //Check if the product doesnt exists to redirect to error page
+        ProductDetailsViewModel productDetailsViewModel = this.productService.createProductForDetails(id);
+        if(productDetailsViewModel == null){
+            return "redirect:error";
+        }
+
+
+        //Increment product view
+        this.productService.incrementProductView(id);
+
+
+        model.addAttribute("productToShow", productDetailsViewModel);
+        model.addAttribute("isCreator", false);
+
+
+        if(productDetailsViewModel.getCreatorId() == userService.getCurrentLoggedInUser().id){
+            model.addAttribute("isCreator", true);
+            return "product-details";
+        }
+
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("ROLE_ADMIN") ||
+            SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("ROLE_MASTER"))
+        {
+            model.addAttribute("isAdmin", true);
+        }
         return "product-details";
     }
 
     @GetMapping("/all")
     public String all() {
-        return "productsAll";
+
+
+
+        return "products-all";
     }
 
 }

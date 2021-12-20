@@ -1,37 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/commons::head">
 <body>
 <header th:replace="fragments/commons::header"></header>
-<div class="container">
-    <div class="card">
+<div class="container" >
+    <div class="card" th:object="${productToShow}">
         <div class="card-body">
-            <h3 class="card-title">Rounded Chair</h3>
+            <h3 th:text="*{name}" class="card-title"></h3>
+            <span>Added on: </span><span style="color: lightgray" th:text="*{#temporals.format(addedOn,'yyyy-MM-dd HH:mm')}"></span>
+            <div> <span style="color: lightgray">Total visits</span> <span style="color: lightgray" th:text="*{viewCount}"></span></div>
             <div class="row">
                 <div class="col-lg-5 col-md-5 col-sm-6">
-                    <div class="white-box text-center"><img src="https://via.placeholder.com/430x600/00CED1/000000" class="img-responsive"></div>
+                    <div class="white-box text-center"><img th:src="*{image}" class="img-responsive"></div>
                 </div>
                 <div class="col-lg-7 col-md-7 col-sm-6">
                     <h4 class="box-title mt-5">Product description</h4>
-                    <p>Lorem Ipsum available,but the majority have suffered alteration in some form,by injected humour,or randomised words which don't look even slightly believable.but the majority have suffered alteration in some form,by injected humour</p>
-                    <h2 class="mt-5">
-                        $153<small class="text-success">(36%off)</small>
-                    </h2>
-                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
-                        <i class="fa fa-shopping-cart"></i>
-                    </button>
-                    <button class="btn btn-primary btn-rounded">Buy Now</button>
-                    <h3 class="box-title mt-5">Key Highlights</h3>
-                    <ul class="list-unstyled">
-                        <li><i class="fa fa-check text-success"></i>Sturdy structure</li>
-                        <li><i class="fa fa-check text-success"></i>Designed to foster easy portability</li>
-                        <li><i class="fa fa-check text-success"></i>Perfect furniture to flaunt your wonderful collectibles</li>
-                    </ul>
+                    <p th:text="*{description}"></p>
+                    <p>Price: <span style="color: darkorange;" th:text="*{price}"></span> lv.</p>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <button th:action="@{/cart/add/{id}(id = *{id})}" class="btn btn-primary btn-rounded">Add to Cart</button>
+                        <div th:if="${isCreator}" style="margin-top: 30px">
+                            <p>Owner actions: </p>
+                            <button class="btn btn-warning" th:action="@{/products/edit/{id}(id = *{id})}">Edit</button>
+                            <button class="btn btn-danger" th:action="@{/products/delete/{id}(id = *{id})}">Delete</button>
+                        </div>
+                        <div th:if="${isAdmin}" style="margin-top: 30px">
+                            <p>Admin actions: </p>
+                            <button class="btn btn-warning" th:action="@{/products/edit/{id}(id = *{id})}">Edit</button>
+                            <button class="btn btn-danger" th:action="@{/products/delete/{id}(id = *{id})}">Delete</button>
+                        </div>
+                    </th:block>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="reviews">
+        <div class="reviewTitle">
+            <span style="color: black"><h1>Reviews: </h1></span>
         </div>
     </div>
 </div>
 <footer th:replace="fragments/commons::footer"></footer>
 </body>
 </html>
+<style>
+    .container {
+        margin-bottom: 100px;
+        margin-top: 50px;
+    }
+    .reviewTitle{
+        margin-left: 500px;
+    }
+</style>
