@@ -2,62 +2,56 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/commons::head"></head>
-<body style="background-color: aquamarine">
+<body  style="background-image: url('https://img.freepik.com/free-vector/white-gold-hexagon-pattern-background_53876-115292.jpg?w=2000');
+background-size: cover">
 
 <header th:replace="fragments/commons::header">
 </header>
 <div class="container col-sm-12">
     <div class="row">
         <div class="col-sm-4 offset-4" style="margin-top: 50px;">
-            <h1 style="margin-bottom: 55px">Welcome to Spring Shop</h1>
-            <a type="submit" style="margin-left: 125px" class="btn btn-primary" th:href="@{/products/all}">Explore our Products</a>
-            <h3 style="margin-top: 25px; margin-left: 75px;">Or Choose Category: </h3>
+            <h1 style="margin-bottom: 55px; margin-left:55px">Добре дошли в CheckMed</h1>
+            <a type="submit" style="margin-left: 125px" class="btn btn-primary" th:href="@{/products/all}">Разгледайте нашите медицински продукти!</a>
+            <h3 style="margin-top: 25px; margin-left: 75px;">Или изберете конкретна категория</h3>
         </div>
     </div>
 
     <div class="row" style="margin-top: 50px">
         <div class="card col-sm-2 offset-2" style="width: 18rem;">
-            <img class="card-img-top" src="/images/categoryIndex/clothes.jpg" alt="Card image cap">
+            <img class="card-img-top" src="https://play-lh.googleusercontent.com/yqkiHAJ-Imr3S5f-KCRcnhF9jzQUQXOuEAWriYtlPLcjy-Qv8D64PO-xadKDNPk2Fpo" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">Clothes</h5>
-                <a th:href="@{/category/clothes}" class="btn btn-primary">Explore</a>
+                <h5 class="card-title">Дентална медицина</h5>
+                <a th:href="@{/category/dental}" class="btn btn-primary">Разгледай</a>
             </div>
         </div>
         <div class="card col-sm-2 offset-1" style="width: 18rem;">
-            <img class="card-img-top" src="/images/categoryIndex/games.jpg" alt="Card image cap">
+            <img class="card-img-top" src="https://africamedpharma.com/wp-content/uploads/2021/06/med-supplies.jpg" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">For gamers</h5>
-                <a th:href="@{/category/games}" class="btn btn-primary">Explore</a>
+                <h5 class="card-title">Медицински консумативи</h5>
+                <a th:href="@{/category/medconsum}" class="btn btn-primary">Разгледай</a>
             </div>
         </div>
         <div class="card col-sm-2 offset-1" style="width: 18rem;">
-            <img class="card-img-top" src="/images/categoryIndex/home.jpg" alt="Card image cap">
+            <img class="card-img-top" src="https://play-lh.googleusercontent.com/fXwYJ1V0fZ--SZcJ7rkMM1PSEW3THEHA53UYQFJvxhlmdclBal5g01MoXJwxpZYhV_g" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">For home</h5>
-                <a th:href="@{/category/home}" class="btn btn-primary">Explore</a>
+                <h5 class="card-title">Спешна медицина</h5>
+                <a th:href="@{/category/emergency}" class="btn btn-primary">Разгледай</a>
             </div>
         </div>
     </div>
     <div class="row" style="margin-top: 50px; margin-bottom: 100px">
         <div class="card col-sm-2 offset-2" style="width: 18rem;">
-            <img class="card-img-top" src="/images/categoryIndex/music.jpg" alt="Card image cap">
+            <img class="card-img-top" src="/images/categoryIndex/desinfection.jpg" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">Music</h5>
-                <a th:href="@{/category/music}" class="btn btn-primary">Explore</a>
+                <h5 class="card-title">Дезинфекция</h5>
+                <a th:href="@{/category/disinfection}" class="btn btn-primary">Разгледай</a>
             </div>
         </div>
         <div class="card col-sm-2 offset-1" style="width: 18rem;">
-            <img class="card-img-top" src="/images/categoryIndex/outside.jpg" alt="Card image cap">
+            <img class="card-img-top" src="https://cdncloudcart.com/17906/products/images/10/defibrilator-heartsave-aed-primedic-image_5f017e076c4be_600x600.png?1653461636" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">Outside</h5>
-                <a th:href="@{/category/outside}" class="btn btn-primary">Explore</a>
-            </div>
-        </div>
-        <div class="card col-sm-2 offset-1" style="width: 18rem;">
-            <img class="card-img-top" src="/images/categoryIndex/sport.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Sport</h5>
-                <a th:href="@{/category/sport}" class="btn btn-primary">Explore</a>
+                <h5 class="card-title">Дефибрилатори</h5>
+                <a th:href="@{/category/defibrillators}" class="btn btn-primary">Разгледай</a>
             </div>
         </div>
     </div>

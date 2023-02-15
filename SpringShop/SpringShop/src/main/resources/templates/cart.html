@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body onload="calculate()" style="background-image: url('https://img.freepik.com/premium-vector/seamless-shopping-cart-pattern-white-background-simple-shopping-cart-icon-creative-design-can-be-used-wallpaper-web-page-background-textile-print-ui-ux_159242-3135.jpg?w=2000')">
+<header th:replace="fragments/commons::header"></header>
+<div class="container">
+    <h1 class="text-center">Твоята количка</h1>
+    <th:block th:if="${isEmpty}">
+                <span class="text-center" style="color: red">
+                <h2>Нямате неща в количката</h2>
+                 </span>
+    </th:block>
+    <th:block th:unless="${isEmpty}">
+        <table class="table table-bordered" style="background-color: antiquewhite">
+                <thead>
+                <tr>
+                    <th>Име на продукта</th>
+                    <th>Цена</th>
+                </tr>
+                </thead>
+                <tbody th:each="p: ${products}" th:object="${p}">
+                <tr>
+                    <td th:text="${p.name}"></td>
+                    <td>
+                        <span id="priceOfElement" style="color: darkblue" th:text="${p.price}"></span>
+                        lv
+                        <a th:href="@{/cart/remove/{id}(id=*{id})}" style="margin-left: 15px" href="/">Премахни</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tr>
+                    <td>Общо в лева</td>
+                    <td><span id="totalSum" style="color: red;"></span> lv</td>
+                </tr>
+                </tfoot>
+        </table>
+        <div class="text-center">
+            <a th:href="@{/orders/finish}" class="btn btn-primary">Поръчай</a>
+        </div>
+    </th:block>
+</div>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>
+<style>
+    /* Add some padding and margin to the container */
+    .container {
+        padding: 30px;
+        margin-top: 50px;
+    }
+
+    /* Style the heading */
+    h1 {
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    /* Style the table */
+    table {
+        width: 100%;
+    }
+
+    /* Add some hover effect to the table rows */
+    table tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    /* Style the "Total" row */
+    table tfoot td {
+        font-weight: bold;
+    }
+
+    /* Style the checkout button */
+    .btn {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 20px;
+        cursor: pointer;
+    }
+
+    /* Change the color of the button on hover */
+    .btn:hover {
+        background-color: #3e8e41;
+    }
+
+    /* Add some style to the icon */
+    .fas {
+        color: white;
+        padding-right: 10px;
+    }
+</style>
+<script>
+    function calculate() {
+        var elems = document.querySelectorAll("#priceOfElement");
+        if(elems.length == 0 ) {
+            return;
+        }
+        var totalPrice = 0.00;
+        for (let i = 0; i < elems.length; i++) {
+            totalPrice += parseFloat(elems[i].innerText);
+            console.log(parseFloat(elems[i].innerText));
+        }
+
+        document.getElementById("totalSum").innerText = Math.round(totalPrice*100) / 100;
+        console.log(totalPrice);
+    }
+</script>

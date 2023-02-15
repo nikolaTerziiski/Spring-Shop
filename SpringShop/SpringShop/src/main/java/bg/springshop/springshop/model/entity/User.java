@@ -1,6 +1,10 @@
 package bg.springshop.springshop.model.entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +18,17 @@ public class User extends BaseEntity {
     private Set<Role> roles;
     private List<Product> products;
     private ShoppingCart shoppingCart;
+    private String nickname;
+
+
+    @Column(nullable = false)
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     @Column(nullable = false)
     public String getUsername() {
@@ -51,7 +66,8 @@ public class User extends BaseEntity {
         this.roles = roles;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany
     public List<Product> getProducts() {
         return products;
     }
@@ -60,6 +76,7 @@ public class User extends BaseEntity {
         this.products = products;
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToOne
     public ShoppingCart getShoppingCart() {
         return shoppingCart;

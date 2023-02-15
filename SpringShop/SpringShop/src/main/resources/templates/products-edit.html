@@ -3,13 +3,14 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/commons::head">
 </head>
-<body>
+<body  style="background-image: url('https://img.freepik.com/free-vector/white-gold-hexagon-pattern-background_53876-115292.jpg?w=2000');
+background-size: cover">
 <header th:replace="fragments/commons::header"></header>
 <div class="container">
     <th:block th:if="${canChange}">
     <span th:text="*{canChange}"></span>
     <span style="margin-left: 300px;">
-        <h2>You cannot edit this, because you haven't created it</h2>
+        <h2>Не може да промените този продукт, защото не сте го създали</h2>
     </span>
     </th:block>
     <th:block th:unless="${canChange}">

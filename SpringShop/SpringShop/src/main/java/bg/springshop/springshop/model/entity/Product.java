@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -18,7 +19,7 @@ public class Product extends BaseEntity{
     private String image;
     private User creator;
     private LocalDateTime addedOn;
-
+    private Set<ShoppingCart> shoppingCarts;
 
     @Column(nullable = false)
     public String getName() {
@@ -99,5 +100,14 @@ public class Product extends BaseEntity{
 
     public void setAddedOn(LocalDateTime addedOn) {
         this.addedOn = addedOn;
+    }
+
+    @ManyToMany(mappedBy = "products")
+    public Set<ShoppingCart> getShoppingCarts() {
+        return shoppingCarts;
+    }
+
+    public void setShoppingCarts(Set<ShoppingCart> shoppingCarts) {
+        this.shoppingCarts = shoppingCarts;
     }
 }

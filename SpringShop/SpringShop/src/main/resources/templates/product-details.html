@@ -3,33 +3,35 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/commons::head">
-<body>
+<body  style="background-image: url('https://img.freepik.com/free-vector/white-gold-hexagon-pattern-background_53876-115292.jpg?w=2000');
+background-size: cover">
 <header th:replace="fragments/commons::header"></header>
 <div class="container" >
     <div class="card" th:object="${productToShow}">
+        <input type="hidden" name="productId" id="productId" th:value="${productToShow.id}">
         <div class="card-body">
             <h3 th:text="*{name}" class="card-title"></h3>
-            <span>Added on: </span><span style="color: lightgray" th:text="*{#temporals.format(addedOn,'yyyy-MM-dd HH:mm')}"></span>
-            <div> <span style="color: lightgray">Total visits</span> <span style="color: lightgray" th:text="*{viewCount}"></span></div>
+            <span>Добавено на: </span><span style="color: lightgray" th:text="*{#temporals.format(addedOn,'yyyy-MM-dd HH:mm')}"></span>
+            <div> <span style="color: lightgray">Общо посещения</span> <span style="color: lightgray" th:text="*{viewCount}"></span></div>
             <div class="row">
                 <div class="col-lg-5 col-md-5 col-sm-6">
-                    <div class="white-box text-center"><img th:src="*{image}" class="img-responsive"></div>
+                    <div class="white-box text-center"><img style="width: 300px; height: 300px" th:src="*{image}" class="img-responsive"></div>
                 </div>
                 <div class="col-lg-7 col-md-7 col-sm-6">
-                    <h4 class="box-title mt-5">Product description</h4>
+                    <h4 class="box-title mt-5">Описание на продукта</h4>
                     <p th:text="*{description}"></p>
                     <p>Price: <span style="color: darkorange;" th:text="*{price}"></span> lv.</p>
+                    <th:block th:if="${isInShoppingCart}">
+                        <a id="disabled" disabled class="btn btn-primary btn-rounded">Добавено</a>
+                    </th:block>
+                    <th:block th:unless="${isInShoppingCart}">
+                            <a th:href="@{/cart/add/{id}(id = *{id})}" id="add-to-cart-button" class="btn btn-primary btn-rounded">Добави в количка</a>
+                    </th:block>
                     <th:block sec:authorize="isAuthenticated()">
-                        <button th:action="@{/cart/add/{id}(id = *{id})}" class="btn btn-primary btn-rounded">Add to Cart</button>
-                        <div th:if="${isCreator}" style="margin-top: 30px">
+                        <div th:if="${isCreator || isAdmin}" style="margin-top: 30px">
                             <p>Owner actions: </p>
-                            <a class="btn btn-warning" th:href="@{/products/edit/{id}(id = *{id})}">Edit</a>
-                            <a class="btn btn-danger" th:href="@{/products/delete/{id}(id = *{id})}">Delete</a>
-                        </div>
-                        <div th:if="${isAdmin}" style="margin-top: 30px">
-                            <p>Admin actions: </p>
-                            <a class="btn btn-warning" th:href="@{/products/edit/{id}(id = *{id})}">Edit</a>
-                            <a class="btn btn-danger" th:href="@{/products/delete/{id}(id = *{id})}">Delete</a>
+                            <a class="btn btn-warning" th:href="@{/products/edit/{id}(id = *{id})}">Промени</a>
+                            <a class="btn btn-danger" th:href="@{/products/delete/{id}(id = *{id})}">Изтрий</a>
                         </div>
                     </th:block>
                 </div>
@@ -52,5 +54,12 @@
     }
     .reviewTitle{
         margin-left: 500px;
+    }
+    .user_name{
+        font-size:14px;
+        font-weight: bold;
+    }
+    .comments-list .media{
+        border-bottom: 1px dotted #ccc;
     }
 </style>

@@ -3,6 +3,7 @@ package bg.springshop.springshop.service;
 import bg.springshop.springshop.model.binding.ProductCreateBindingModel;
 import bg.springshop.springshop.model.binding.ProductEditBindingModel;
 import bg.springshop.springshop.model.entity.Category;
+import bg.springshop.springshop.model.entity.Product;
 import bg.springshop.springshop.model.entity.enums.CategoryEnum;
 import bg.springshop.springshop.model.view.ProductAllViewModel;
 import bg.springshop.springshop.model.view.ProductDetailsViewModel;
@@ -29,4 +30,6 @@ public interface ProductService {
     void deleteProduct(Long id);
 
     List<ProductAllViewModel> getProductsByCategory(Category category);
+
+    Product takeProduct(Long productId);
 }

@@ -3,16 +3,17 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/commons::head"></head>
 
-<body>
+<body  style="background-image: url('https://img.freepik.com/free-vector/white-gold-hexagon-pattern-background_53876-115292.jpg?w=2000');
+background-size: cover">
 <header th:replace="fragments/commons::header"></header>
 
-<div class="container" style="margin-top: 50px">
+<div class="container" style="margin-top: 50px; width: 1500px">
     <div class="row">
         <div class="col-md-3" th:each="r : ${products}" th:object="${r}">
             <div class="ibox">
                 <div class="ibox-content product-box">
                     <div class="product-imitation">
-                        <img th:src="*{image}">
+                        <img style="width: 250px; height: 250px" th:src="*{image}">
                     </div>
                     <div class="product-desc">
                     <span class="product-price">
@@ -186,5 +187,8 @@
         font-size: 90%;
         background: #ffffff;
         padding: 10px 15px;
+    }
+    .container {
+        max-width: 1500px;
     }
 </style>

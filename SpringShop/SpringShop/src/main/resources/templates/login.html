@@ -4,22 +4,23 @@
 
 <head th:replace="fragments/commons::head"></head>
 
-<body>
+<body style="background-image: url('https://img.freepik.com/free-vector/white-gold-hexagon-pattern-background_53876-115292.jpg?w=2000');
+background-size: cover">
 <header th:replace="fragments/commons::header"></header>
 <form th:action="@{/users/login}"
       th:method="POST">
     <div class="form-group">
-        <label for="username">Enter Username</label>
+        <label for="username">Въведете потребителско име</label>
         <input
                type="text" class="form-control"
                required minlength="3" maxlength="40"
                id="username"
                name="username"
                aria-describedby="emailHelp"
-               placeholder="Enter email">
+               placeholder="потребителско име..">
         <small id="usernameError"
-               class="invalid-feedback bg-danger rounded">Username length must be between 3 and 40 characters</small>
-        <label for="password">Enter password </label>
+               class="invalid-feedback bg-danger rounded">Дължината на потребителското име трябва да е между 3 и 40 символа</small>
+        <label for="password">Въведете парола </label>
         <input
                required minlength="3" maxlength="40"
                class="form-control"
@@ -27,12 +28,12 @@
                type="password"
                name="password"
                aria-describedby="emailHelp"
-               placeholder="Enter email">
+               placeholder="парола..">
         <small id="passwordError"
-               class="invalid-feedback bg-danger rounded">Password length must be between 3 and 40 characters</small>
+               class="invalid-feedback bg-danger rounded">Дължината на паролата трябва да е между 3 и 40 символа</small>
     </div>
-    <button id="submitButton" type="submit" class="btn btn-primary">Log in</button> or
-    <a href="/users/register">Register</a>
+    <button id="submitButton" type="submit" class="btn btn-primary">Влез</button> или
+    <a href="/users/register">Регистрирация</a>
 </form>
     <footer th:replace="fragments/commons::footer"></footer>
 </body>

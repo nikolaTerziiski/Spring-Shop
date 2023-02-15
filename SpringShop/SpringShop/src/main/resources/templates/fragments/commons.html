@@ -11,7 +11,7 @@
 
 <header th:fragments="header">
     <nav class="navbar navbar-expand-lg py-4 bg-dark text-white-50">
-        <a class="navbar-brand" href="/" style="color: white">Spring Shop</a>
+        <a class="navbar-brand" href="/" style="color: white">CheckMed</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -19,25 +19,54 @@
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <th:block sec:authorize="!isAuthenticated()">
                 <li class="nav-item">
-                    <a class="nav-link" href="/users/login" style="color: white">Login</a>
+                    <a class="nav-link" href="/users/login" style="color: white">Влез</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/users/register" style="color: white">Register</a>
+                    <a class="nav-link" href="/users/register" style="color: white">Регистрирай се</a>
                 </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users/contacts}" style="color: white">Поддръжка</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/service-shops}" style="color: white">Сервизи</a>
+                    </li>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
                     <li class="nav-item">
-                        <a class="nav-link" href="/products/add" style="color: white">Add Product</a>
+                        <a class="nav-link" href="/products/add" style="color: white">Добави продукт</a>
+                    </li>
+                    |
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/contacts" style="color: white">Връзка с поддръжка</a>
+                    </li>
+                    |
+                    <li class="nav-item">
+                        <a class="nav-link" href="/service-shops" style="color: white">Сервизи</a>
                     </li>
                 </th:block>
             </ul>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <th:block sec:authorize="isAuthenticated()">
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <span class="nav-link" href="/users/register" style="color: white">Welcome, <th:block sec:authentication="name"></th:block></span>
+                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                        <li class="nav-item">
+                            <a style="color: darkorange" class="nav-link" th:href="@{/administrative}">
+                                <i class="fas fa-shopping-cart"></i> Администриране
+                                <span class="badge badge-primary" id="cart-item-count"></span>
+                            </a>
+                        </li>
+                    </th:block>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/cart/}">Количка</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users/profile/{name}(name = ${#authentication.getName()})}">Профил</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link" href="/users/register" style="color: white">Добре дошъл, <th:block sec:authentication="name"></th:block></span>
                     </li>
                     <li class="nav-item" style="text-align: right">
-                        <a class="nav-link" href="/users/logout" style="color: white">Logout</a>
+                        <a class="nav-link" href="/users/logout" style="color: white">Изход</a>
                     </li>
                 </th:block>
             </ul>

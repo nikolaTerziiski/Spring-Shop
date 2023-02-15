@@ -9,7 +9,8 @@ public class ShoppingCart extends BaseEntity{
 
     public List<Product> products;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinTable(name = "shopping_carts_products",joinColumns = @JoinColumn(name = "shopping_cart_id"))
     public List<Product> getProducts() {
         return products;
     }

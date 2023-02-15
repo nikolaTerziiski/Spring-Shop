@@ -2,6 +2,9 @@ package bg.springshop.springshop.web;
 
 import bg.springshop.springshop.model.binding.ProductCreateBindingModel;
 import bg.springshop.springshop.model.binding.ProductEditBindingModel;
+import bg.springshop.springshop.model.entity.Product;
+import bg.springshop.springshop.model.entity.ShoppingCart;
+import bg.springshop.springshop.model.entity.User;
 import bg.springshop.springshop.model.view.ProductAllViewModel;
 import bg.springshop.springshop.model.view.ProductDetailsViewModel;
 import bg.springshop.springshop.service.ProductService;
@@ -16,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/products")
@@ -77,17 +82,31 @@ public class ProductController {
 
         model.addAttribute("productToShow", productDetailsViewModel);
         model.addAttribute("isCreator", false);
+        model.addAttribute("isAdmin", false);
+        model.addAttribute("isInShoppingCart", false);
 
-
-        if(productDetailsViewModel.getCreatorId() == userService.getCurrentLoggedInUser().id){
-            model.addAttribute("isCreator", true);
+        User user = userService.getCurrentLoggedInUser();
+        //Check if user exists
+        if(user == null){
             return "product-details";
         }
 
-        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("ROLE_ADMIN") ||
-            SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("ROLE_MASTER"))
+        if(productDetailsViewModel.getCreatorId() == user.id){
+            model.addAttribute("isCreator", true);
+        }
+
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(e ->
+            e.toString().equals("ROLE_ADMIN")))
         {
             model.addAttribute("isAdmin", true);
+            model.addAttribute("isCreator", false);
+        }
+
+        ShoppingCart cart = user.getShoppingCart();
+
+        if (user.getShoppingCart().getProducts().size() != 0) {
+            if (user.getShoppingCart().getProducts().stream().anyMatch(e -> Objects.equals(e.id, id)))
+                model.addAttribute("isInShoppingCart", true);
         }
         return "product-details";
     }
@@ -110,8 +129,8 @@ public class ProductController {
         }
 
         if(this.productService.doesUserCreateProduct(id)
-            || this.userService.getCurrentLoggedInUser().getRoles().contains("ROLE_ADMIN")
-            || this.userService.getCurrentLoggedInUser().getRoles().contains("ROLE_MASTER")){
+            || SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(e ->
+            e.toString().equals("ROLE_ADMIN"))){
 
             model.addAttribute("canChange", false);
             model.addAttribute("productEditBindingModel", productEditBindingModel);
@@ -147,8 +166,8 @@ public class ProductController {
         }
 
         if(this.productService.doesUserCreateProduct(id)
-            || this.userService.getCurrentLoggedInUser().getRoles().contains("ROLE_ADMIN")
-            || this.userService.getCurrentLoggedInUser().getRoles().contains("ROLE_MASTER")){
+            || SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(e ->
+            e.toString().equals("ROLE_ADMIN"))){
 
             this.productService.deleteProduct(id);
             return "redirect:/";

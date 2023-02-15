@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            /*background-image: url('');*/
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            margin-top: 25px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h5 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 2px 2px 10px #ccc;
+        }
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: none;
+        }
+        input[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<header th:replace="fragments/commons::header"></header>
+<div class="container" style="">
+        <h1>Свържете се с нас при проблем</h1>
+        <div th:if="${hasError}" style="text-align: center">
+            <small style="color: red; font-size: 30px; text-align: center">Моля попълнете полетата коректно</small>
+        </div>
+        <form th:action="@{/users/contacts}" th:method="POST"
+                th:object="${registerProblemBindingModel}">
+            <label for="name">Име:</label>
+            <input th:field="${registerProblemBindingModel.reportName}"
+                   required minlength="3" maxlength="40"
+                   type="text" id="name" name="reportName"><br>
+            <label for="email">Имейл:</label>
+            <input th:field="${registerProblemBindingModel.email}"
+                   required minlength="3" maxlength="40"
+                   type="email" id="email" name="email"><br>
+            <label for="product">Име на продукта:</label>
+            <input th:field="${registerProblemBindingModel.productDescription}" required minlength="3" maxlength="40" type="text" id="product" name="product"><br>
+            <label for="problem">Описание на проблема:</label>
+            <textarea th:field="${registerProblemBindingModel.problemDescription}" required minlength="3" maxlength="40"
+                      id="problem" name="problem"></textarea><br>
+            <input type="submit" value="Изпратете съобщение">
+        </form>
+</div>
+<br>
+<h5 style="color: chocolate">Искате да направим проверка на място? Изпратете заявка</h5>
+<div class="container">
+    <div th:if="${hasErrorSecond}" style="text-align: center">
+        <small style="color: red; font-size: 30px; text-align: center">Моля попълнете полетата коректно</small>
+    </div>
+    <form th:action="@{/users/contacts-live}" th:method="POST"
+          th:object="${registerProblemBindingModel}">
+        <div class="form-group">
+            <label for="name">Две имена</label>
+            <input th:field="${requestLiveCheckBindingModel.twoNames}"
+                   required minlength="3" maxlength="40" type="text" class="form-control" id="fullNameRequest" placeholder="имена на отговорното лице...">
+        </div>
+        <div class="form-group">
+            <label for="address">Адрес</label>
+            <input th:field="${requestLiveCheckBindingModel.address}"
+                   required minlength="3" maxlength="40" type="text" class="form-control" id="address" placeholder="адрес на обекта...">
+        </div>
+        <div class="form-group">
+            <label for="dateAndHour">Напишете дата и час за желана проверка</label>
+            <input th:field="${requestLiveCheckBindingModel.dateAndHour}"
+                   required minlength="3" maxlength="40"  type="text" class="form-control" id="dateAndHour" placeholder="Пример - 27.01, 16:30">
+        </div>
+        <span style="color: red">*Имейте предвид, че всяко посещение се заплаща на стойност 50лв.</span>
+        <button type="submit" class="btn btn-primary">Изпратете заявка</button>
+    </form>
+</div>
+<div class="container" style="margin-bottom: 100px">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2 style="color: red">Винаги може да ни потърсите на телефон</h2>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+            <a href="tel:+1234567890">+1 (234) 567-890</a>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+

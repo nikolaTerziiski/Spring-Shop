@@ -131,4 +131,9 @@ public class ProductServiceImpl implements ProductService {
         return this.takeAll().stream().filter(e -> e.getCategory().id == category.id).collect(
             Collectors.toList());
     }
+
+    @Override
+    public Product takeProduct(Long productId) {
+        return this.productRepository.getById(productId);
+    }
 }

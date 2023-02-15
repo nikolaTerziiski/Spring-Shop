@@ -10,8 +10,18 @@ public class UserRegistrationBindingModel {
     private String email;
     private String password;
     private String confirmPassword;
+    private String nickname;
 
     public UserRegistrationBindingModel() {
+    }
+
+    @Length(min = 3, max = 40)
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     @Length(min = 3, max = 40)

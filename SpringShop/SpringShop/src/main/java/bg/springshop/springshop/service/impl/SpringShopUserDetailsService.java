@@ -13,7 +13,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class SpringShopUserDetailsService implements UserDetailsService {
+public class
+SpringShopUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 

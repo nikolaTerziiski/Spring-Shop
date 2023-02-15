@@ -10,4 +10,9 @@ public class FragmentsController {
     public String error() {
         return "error";
     }
+
+    @GetMapping("/service-shops")
+    public String serviceShops() {
+        return "service-shops.html";
+    }
 }
